@@ -29,7 +29,7 @@
 
 		<folio-spring-base.version>3.0.1</folio-spring-base.version>
 		<lombok.version>1.18.18</lombok.version>
-		<log4j2.version>2.16.0</log4j2.version>
+		<log4j2.version>2.17.2</log4j2.version>
 	</properties>
 
 	<dependencies>
@@ -60,10 +60,6 @@
 			<artifactId>log4j-web</artifactId>
 			<version>${log4j2.version}</version>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-web</artifactId>-->
-<!--		</dependency>-->
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
