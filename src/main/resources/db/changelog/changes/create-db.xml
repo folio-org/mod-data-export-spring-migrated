@@ -1,0 +1,190 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="MDEXP-458@@create-mapping-profiles-table" author="Illia Daliek">
+        <preConditions onFail="CONTINUE">
+            <not>
+                <tableExists tableName="mapping_profiles"/>
+            </not>
+        </preConditions>
+        <createTable tableName="mapping_profiles">
+            <column name="id" type="uuid" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" primaryKeyName="pk_mapping_profile" nullable="false"/>
+            </column>
+            <column name="jsonb" type="jsonb"/>
+            <column name="creation_date" type="timestamp"/>
+            <column name="created_by" type="text"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="MDEXP-458@@create-job-profiles-table" author="Illia Daliek">
+        <preConditions onFail="CONTINUE">
+            <not>
+                <tableExists tableName="job_profiles"/>
+            </not>
+        </preConditions>
+        <createTable tableName="job_profiles">
+            <column name="id" type="uuid" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" primaryKeyName="pk_job_profile" nullable="false"/>
+            </column>
+            <column name="jsonb" type="jsonb"/>
+            <column name="creation_date" type="timestamp"/>
+            <column name="created_by" type="text"/>
+            <column name="mappingprofileid" type="uuid">
+                <constraints nullable="false" foreignKeyName="pk_mapping_profile" references="mapping_profiles(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="MDEXP-458@@create-file-definitions-table" author="Illia Daliek">
+        <preConditions onFail="CONTINUE">
+            <not>
+                <tableExists tableName="file_definitions"/>
+            </not>
+        </preConditions>
+        <createTable tableName="file_definitions">
+            <column name="id" type="uuid" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" primaryKeyName="pk_file_definition" nullable="false"/>
+            </column>
+            <column name="jsonb" type="jsonb"/>
+            <column name="creation_date" type="timestamp"/>
+            <column name="created_by" type="text"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="MDEXP-458@@create-job-executions-table" author="Illia Daliek">
+        <preConditions onFail="CONTINUE">
+            <not>
+                <tableExists tableName="job_executions"/>
+            </not>
+        </preConditions>
+        <createTable tableName="job_executions">
+            <column name="id" type="uuid" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" primaryKeyName="pk_job_execution" nullable="false"/>
+            </column>
+            <column name="jsonb" type="jsonb"/>
+            <column name="jobprofileid" type="uuid">
+                <constraints nullable="false" foreignKeyName="pk_job_profile" references="job_profiles(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="MDEXP-458@@create-error-logs-table" author="Illia Daliek">
+        <preConditions onFail="CONTINUE">
+            <not>
+                <tableExists tableName="error_logs"/>
+            </not>
+        </preConditions>
+        <createTable tableName="error_logs">
+            <column name="id" type="uuid" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" primaryKeyName="pk_error_logs" nullable="false"/>
+            </column>
+            <column name="jsonb" type="jsonb"/>
+            <column name="creation_date" type="timestamp"/>
+            <column name="created_by" type="text"/>
+            <column name="jobprofileid" type="uuid">
+                <constraints nullable="false" foreignKeyName="pk_job_profile" references="job_profiles(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+<!--    add trigger functions-->
+
+    <changeSet id="MDEXP-458@@create-set-id-in-jsonb-function" author="Illia Daliek">
+        <sqlFile dbms="postgresql"
+                 path="set_id_in_jsonb_function_function.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="MDEXP-458@@create-set-job-profile-in-jsonb-function" author="Illia Daliek">
+        <sqlFile dbms="postgresql"
+                 path="set_job_profile_in_jsonb_function.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="MDEXP-458@@create-set-mapping-profile-in-jsonb-function-function" author="Illia Daliek">
+        <sqlFile dbms="postgresql"
+                 path="set_mapping_profile_in_jsonb_function.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="MDEXP-458@@create-set-metadata-function" author="Illia Daliek">
+        <sqlFile dbms="postgresql"
+                 path="set_metadata_function.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="MDEXP-458@@create-update_metadata_created_date_function" author="Illia Daliek">
+        <sqlFile dbms="postgresql"
+                 path="update_metadata_created_date_function.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="false"/>
+    </changeSet>
+
+<!--    apply triggers to tables-->
+
+    <changeSet id="MDEXP-458@@apply-triggers-on-job-profiles-table" author="Illia Daliek">
+        <sql>
+            DROP TRIGGER IF EXISTS set_id_in_jsonb ON job_profiles;
+            DROP TRIGGER IF EXISTS set_metadata ON job_profiles;
+            DROP TRIGGER IF EXISTS update_metadata_created_date ON job_profiles;
+            DROP TRIGGER IF EXISTS set_mapping_profile_in_jsonb ON job_profiles;
+            CREATE TRIGGER set_id_in_jsonb BEFORE INSERT OR UPDATE ON job_profiles FOR EACH ROW EXECUTE PROCEDURE set_id_in_jsonb();
+            CREATE TRIGGER set_metadata BEFORE INSERT ON job_profiles FOR EACH ROW EXECUTE PROCEDURE set_metadata();
+            CREATE TRIGGER update_metadata_created_date BEFORE UPDATE ON job_profiles FOR EACH ROW EXECUTE PROCEDURE update_metadata_created_date();
+            CREATE TRIGGER set_mapping_profile_in_jsonb BEFORE INSERT OR UPDATE ON job_profiles FOR EACH ROW EXECUTE PROCEDURE set_mapping_profile_in_jsonb();
+        </sql>
+    </changeSet>
+
+    <changeSet id="MDEXP-458@@apply-triggers-on-mapping-profiles-table" author="Illia Daliek">
+        <sql>
+            DROP TRIGGER IF EXISTS set_id_in_jsonb ON mapping_profiles;
+            DROP TRIGGER IF EXISTS set_metadata ON mapping_profiles;
+            DROP TRIGGER IF EXISTS update_metadata_created_date ON mapping_profiles;
+            CREATE TRIGGER set_id_in_jsonb BEFORE INSERT OR UPDATE ON mapping_profiles FOR EACH ROW EXECUTE PROCEDURE set_id_in_jsonb();
+            CREATE TRIGGER set_metadata BEFORE INSERT ON mapping_profiles FOR EACH ROW EXECUTE PROCEDURE set_metadata();
+            CREATE TRIGGER update_metadata_created_date BEFORE UPDATE ON mapping_profiles FOR EACH ROW EXECUTE PROCEDURE update_metadata_created_date();
+        </sql>
+    </changeSet>
+
+    <changeSet id="MDEXP-458@@apply-triggers-on-job-executions-table" author="Illia Daliek">
+        <sql>
+            DROP TRIGGER IF EXISTS set_id_in_jsonb ON job_executions;
+            DROP TRIGGER IF EXISTS set_job_profile_in_jsonb ON job_executions;
+            CREATE TRIGGER set_id_in_jsonb BEFORE INSERT OR UPDATE ON job_executions FOR EACH ROW EXECUTE PROCEDURE set_id_in_jsonb();
+            CREATE TRIGGER set_job_profile_in_jsonb BEFORE INSERT ON job_executions FOR EACH ROW EXECUTE PROCEDURE set_job_profile_in_jsonb();
+        </sql>
+    </changeSet>
+
+    <changeSet id="MDEXP-458@@apply-triggers-on-file-definitions-table" author="Illia Daliek">
+        <sql>
+            DROP TRIGGER IF EXISTS set_id_in_jsonb ON file_definitions;
+            DROP TRIGGER IF EXISTS set_metadata ON file_definitions;
+            DROP TRIGGER IF EXISTS update_metadata_created_date ON file_definitions;
+            CREATE TRIGGER set_id_in_jsonb BEFORE INSERT OR UPDATE ON file_definitions FOR EACH ROW EXECUTE PROCEDURE set_id_in_jsonb();
+            CREATE TRIGGER set_metadata BEFORE INSERT ON file_definitions FOR EACH ROW EXECUTE PROCEDURE set_metadata();
+            CREATE TRIGGER update_metadata_created_date BEFORE UPDATE ON file_definitions FOR EACH ROW EXECUTE PROCEDURE update_metadata_created_date();
+        </sql>
+    </changeSet>
+
+    <changeSet id="MDEXP-458@@apply-triggers-on-error-logs-table" author="Illia Daliek">
+        <sql>
+            DROP TRIGGER IF EXISTS set_id_in_jsonb ON error_logs;
+            DROP TRIGGER IF EXISTS set_metadata ON error_logs;
+            DROP TRIGGER IF EXISTS update_metadata_created_date ON error_logs;
+            DROP TRIGGER IF EXISTS set_job_profile_in_jsonb ON error_logs;
+            CREATE TRIGGER set_id_in_jsonb BEFORE INSERT OR UPDATE ON error_logs FOR EACH ROW EXECUTE PROCEDURE set_id_in_jsonb();
+            CREATE TRIGGER set_metadata BEFORE INSERT ON error_logs FOR EACH ROW EXECUTE PROCEDURE set_metadata();
+            CREATE TRIGGER update_metadata_created_date BEFORE UPDATE ON error_logs FOR EACH ROW EXECUTE PROCEDURE update_metadata_created_date();
+            CREATE TRIGGER set_job_profile_in_jsonb BEFORE INSERT ON error_logs FOR EACH ROW EXECUTE PROCEDURE set_job_profile_in_jsonb();
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
