@@ -5,7 +5,7 @@ mod-data-export-worker/target/
 !**/src/test/**/target/
 mvnw
 mvnw.cmd
-
+.mvn
 ### STS ###
 .apt_generated
 .classpath
