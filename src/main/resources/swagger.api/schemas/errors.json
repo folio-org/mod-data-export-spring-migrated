@@ -10,7 +10,7 @@
         "type": "array",
         "items": {
           "type": "object",
-          "$ref": "error.json"
+          "$ref": "error.json#/Error"
         }
       },
       "total_records": {

@@ -31,7 +31,7 @@
       "userInfo": {
         "description": "First name, last name and username of the user, who updated the Job Profile",
         "type": "object",
-        "$ref": "userInfo.json"
+        "$ref": "userInfo.json#/UserInfo"
       },
       "mappingProfileId": {
         "description": "Associated mapping profile id",
@@ -41,12 +41,12 @@
       "protocol": {
         "description": "TCP/IP settings",
         "type": "object",
-        "$ref": "protocol.json"
+        "$ref": "protocol.json#/Protocol"
       },
       "metadata": {
         "description": "Metadata provided by the server",
         "type": "object",
-        "$ref": "../references/metadata.json",
+        "$ref": "../references/metadata.json#/Metadata",
         "readonly": true
       }
     },

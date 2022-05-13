@@ -27,7 +27,7 @@
       "recordType": {
         "description": "Mapping Profile type",
         "type": "string",
-        "$ref": "recordTypes.json"
+        "$ref": "recordTypes.json#/RecordTypes"
       },
       "metadataParameters": {
         "description": "Additional parameters used for mapping",

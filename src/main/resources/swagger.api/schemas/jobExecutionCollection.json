@@ -11,7 +11,7 @@
         "id": "jobExecutionList",
         "items": {
           "type": "object",
-          "$ref": "jobExecution.json"
+          "$ref": "jobExecution.json#/JobExecution"
         }
       },
       "totalRecords": {

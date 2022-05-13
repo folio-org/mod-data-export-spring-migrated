@@ -23,7 +23,7 @@
       },
       "recordType": {
         "description": "Record type of the field",
-        "$ref": "profiles/recordTypes.json"
+        "$ref": "profiles/recordTypes.json#/RecordTypes"
       },
       "metadataParameters": {
         "description": "Additional parameters used for mapping",

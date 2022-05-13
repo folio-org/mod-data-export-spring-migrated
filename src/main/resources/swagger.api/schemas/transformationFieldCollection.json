@@ -11,7 +11,7 @@
         "id": "transformationFieldsList",
         "items": {
           "type": "object",
-          "$ref": "transformationField.json"
+          "$ref": "transformationField.json#/TransformationField"
         }
       },
       "totalRecords": {

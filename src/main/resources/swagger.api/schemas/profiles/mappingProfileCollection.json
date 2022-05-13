@@ -11,7 +11,7 @@
         "id": "mappingProfileList",
         "items": {
           "type": "object",
-          "$ref": "mappingProfile.json"
+          "$ref": "mappingProfile.json#/MappingProfile"
         }
       },
       "totalRecords": {

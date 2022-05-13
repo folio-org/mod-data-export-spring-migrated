@@ -49,7 +49,7 @@
       "metadata": {
         "description": "Meta information ",
         "type": "object",
-        "$ref": "references/metadata.json"
+        "$ref": "references/metadata.json#/Metadata"
       }
     },
     "required": [

@@ -270,6 +270,8 @@ components:
       $ref: 'schemas/jobExecutionCollection.json#/JobExecutionCollection'
     fileDownload:
       $ref: 'schemas/fileDownload.json#/FileDownload'
+    metadata:
+      $ref: 'schemas/references/metadata.json#/Metadata'
   examples:
     exportRequest:
       value:

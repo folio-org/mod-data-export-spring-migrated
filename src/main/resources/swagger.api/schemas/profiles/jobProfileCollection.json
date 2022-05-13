@@ -11,7 +11,7 @@
         "id": "jobProfileList",
         "items": {
           "type": "object",
-          "$ref": "jobProfile.json"
+          "$ref": "jobProfile.json#/JobProfile"
         }
       },
       "totalRecords": {
