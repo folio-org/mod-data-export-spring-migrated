@@ -1,0 +1,314 @@
+openapi: 3.0.0
+info:
+  title: Data-export export API
+  version: v1
+servers:
+  - url: /data-export/
+paths:
+  /export:
+    post:
+      description: Starts the export process
+      operationId: exportRecords
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/exportRequest'
+            example:
+              $ref: '#/components/examples/exportRequest'
+      responses:
+        "204":
+          description: Export process has been run
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: Bad request
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errors'
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+  /qucik-export:
+    post:
+      description: Starts the quick export process
+      operationId: quickExportRecords
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/quickExportRequest'
+            example:
+              $ref: '#/components/examples/quickExportRequest'
+      responses:
+        "200":
+          description: Quick export has been run
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/quickExportResponse'
+              example:
+                $ref: '#/components/examples/quickExportResponse'
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: Bad request
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errors'
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+  /job-executions:
+    get:
+      description: Get job executions by filter
+      operationId: getJobExecutions
+      parameters:
+        - $ref: "#/components/parameters/trait_pageable_offset"
+        - $ref: "#/components/parameters/trait_pageable_limit"
+        - $ref: "#/components/parameters/trait_queryable_query"
+      responses:
+        "200":
+          description: Returns found job executions by searching criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/jobExecutionCollection"
+              example:
+                $ref: "#/components/examples/jobExecutionCollection"
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: unable to list job-executions -- malformed parameter 'query', syntax error at column 6
+        "401":
+          description: Not authorized to perform requested action
+          content:
+            text/plain:
+              example: unable to list job-executions -- unauthorized
+        "422":
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errors'
+        "500":
+          description:
+            Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+  /job-executions/{id}:
+    delete:
+      description: Deletes job execution by the given ID
+      operationId: deleteJobExecutionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: UUID of the job execution
+          schema:
+            $ref: "#/components/schemas/UUID"
+      responses:
+        "204":
+          description: Job execution successfully deleted
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: unable to delete JobExecution -- constraint violation
+        "404":
+          description: Job execution with a given ID not found
+          content:
+            text/plain:
+              example:
+                JobExecution not found
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+  /job-executions/{jobExecutionId}/download/{exportFileId}:
+    get:
+      description: Get a file download Link
+      operationId: getFileDownloadLink
+      parameters:
+        - name: jobExecutionId
+          in: path
+          required: true
+          description: UUID of the job execution
+          schema:
+            $ref: "#/components/schemas/UUID"
+        - name: exportFileId
+          in: path
+          required: true
+          description: UUID of the exported file
+          schema:
+            $ref: "#/components/schemas/UUID"
+      responses:
+        "200":
+          description: Returns JSON with file download link
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fileDownload'
+              example:
+                $ref: '#/components/examples/fileDownload'
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: Bad request
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+  /expire-jobs:
+    post:
+      description: Method to expire long running jobs
+      operationId: Expire JobExecutions
+      responses:
+        "204":
+          description: Deleting of expired jobs has been invoked
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: Bad request
+        "422":
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errors'
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+  /clean-up-files:
+    post:
+      description: API to start clean up mechanism of file definitions and related generated files
+      operationId: Clean up FileDefinitions
+      responses:
+        "204":
+          description: Expired files are going to be cleaned up
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: Bad request
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errors'
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+components:
+  schemas:
+    UUID:
+      type: string
+      format: uuid
+    parameters:
+      $ref: 'schemas/parameters.json#/Parameters'
+    error:
+      $ref: 'schemas/error.json#/Error'
+    errors:
+      $ref: 'schemas/errors.json#/Errors'
+    exportRequest:
+      $ref: 'schemas/exportRequest.json#/ExportRequest'
+    quickExportRequest:
+      $ref: 'schemas/quickExportRequest.json#/QuickExportRequest'
+    quickExportResponse:
+      $ref: 'schemas/quickExportResponse.json#/QuickExportResponse'
+    exportedFile:
+      $ref: 'schemas/exportedFile.json#/ExportedFile'
+    jobExecution:
+      $ref: 'schemas/jobExecution.json#/JobExecution'
+    jobExecutionCollection:
+      $ref: 'schemas/jobExecutionCollection.json#/JobExecutionCollection'
+    fileDownload:
+      $ref: 'schemas/fileDownload.json#/FileDownload'
+  examples:
+    exportRequest:
+      value:
+        $ref: 'examples/exportRequest.sample'
+    quickExportRequest:
+      value:
+        $ref: 'examples/quickExportRequest.sample'
+    quickExportResponse:
+      value:
+        $ref: 'examples/quickExportResponse.sample'
+    jobExecutionCollection:
+      value:
+        $ref: 'examples/jobExecutionCollection.sample'
+    fileDownload:
+      value:
+        $ref: 'examples/fileDownload.sample'
+  parameters:
+    trait_queryable_query:
+      name: query
+      in: query
+      description: A query string to filter rules based on matching criteria in fields.
+      schema:
+        type: string
+    trait_pageable_offset:
+      name: offset
+      in: query
+      description: Skip over a number of elements by specifying an offset value for
+        the query
+      schema:
+        default: 0
+        minimum: 0
+        maximum: 2147483647
+        type: integer
+    trait_pageable_limit:
+      name: limit
+      in: query
+      description: Limit the number of elements returned in the response
+      schema:
+        default: 10
+        minimum: 0
+        maximum: 2147483647
+        type: integer

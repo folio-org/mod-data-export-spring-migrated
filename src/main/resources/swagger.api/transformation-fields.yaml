@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: Data-export transformation fields API
+  version: v1
+servers:
+  - url: /data-export/
+paths:
+  /transformation-fields:
+    description: Retrieve transformation-field items
+    get:
+      description: Retrieve transformation-field items
+      operationId: getTransformationFields
+      responses:
+        200:
+          description: Returns a list of transformation-field items
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transformationFieldCollection'
+              example:
+                $ref: '#/components/examples/transformationFieldCollection'
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: unable to list transformation-fields -- malformed parameter 'query', syntax error at column 6
+        "401":
+          description: Not authorized to perform requested action
+          content:
+            text/plain:
+              example: unable to list transformation-fields -- unauthorized
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+components:
+  schemas:
+    transformationField:
+      $ref: 'schemas/transformationField.json#/TransformationField'
+    transformationFieldCollection:
+      $ref: 'schemas/transformationFieldCollection.json#/TransformationFieldCollection'
+  examples:
+    transformationFieldCollection:
+      value:
+        $ref: 'examples/transformationFieldCollection.sample'

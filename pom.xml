@@ -27,9 +27,29 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+		<data-export.yaml.file>
+			${project.basedir}/src/main/resources/swagger.api/data-export.yaml
+		</data-export.yaml.file>
+		<file-definitions.yaml.file>
+			${project.basedir}/src/main/resources/swagger.api/file-definitions.yaml
+		</file-definitions.yaml.file>
+		<jobs-profiles.yaml.file>
+			${project.basedir}/src/main/resources/swagger.api/jobs-profiles.yaml
+		</jobs-profiles.yaml.file>
+		<error-logs.yaml.file>
+			${project.basedir}/src/main/resources/swagger.api/error-logs.yaml
+		</error-logs.yaml.file>
+		<mapping-profiles.yaml.file>
+			${project.basedir}/src/main/resources/swagger.api/mapping-profiles.yaml
+		</mapping-profiles.yaml.file>
+		<transformation-fields.yaml.file>
+			${project.basedir}/src/main/resources/swagger.api/transformation-fields.yaml
+		</transformation-fields.yaml.file>
+
 		<folio-spring-base.version>3.0.1</folio-spring-base.version>
 		<lombok.version>1.18.18</lombok.version>
 		<log4j2.version>2.17.2</log4j2.version>
+		<openapi-generator.version>4.3.0</openapi-generator.version>
 	</properties>
 
 	<dependencies>
@@ -117,6 +137,176 @@
 			</plugin>
 
 			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>${openapi-generator.version}</version>
+				<executions>
+					<execution>
+						<id>data-export</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${data-export.yaml.file}</inputSpec>
+							<output>${project.build.directory}/generated-sources</output>
+							<generatorName>spring</generatorName>
+							<modelPackage>${project.groupId}.domain.dto</modelPackage>
+							<generateApis>false</generateApis>
+							<generateApiTests>false</generateApiTests>
+							<generateApiDocumentation>false</generateApiDocumentation>
+							<generateModels>true</generateModels>
+							<modelsToGenerate>
+								Parameters,Error,Errors,ExportRequest,QuickExportRequest,QuickExportResponse,ExportedFile,JobExecution,JobExecutionCollection,FileDownload
+							</modelsToGenerate>
+							<generateModelTests>false</generateModelTests>
+							<generateSupportingFiles>false</generateSupportingFiles>
+							<generateModelDocumentation>true</generateModelDocumentation>
+							<configOptions>
+								<java8>true</java8>
+								<dateLibrary>java</dateLibrary>
+								<interfaceOnly>true</interfaceOnly>
+							</configOptions>
+						</configuration>
+					</execution>
+<!--					<execution>-->
+<!--						<id>error-logs</id>-->
+<!--						<goals>-->
+<!--							<goal>generate</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<inputSpec>${error-logs.yaml.file}</inputSpec>-->
+<!--							<output>${project.build.directory}/generated-sources</output>-->
+<!--							<generatorName>spring</generatorName>-->
+<!--							<modelPackage>${project.groupId}.domain.dto</modelPackage>-->
+<!--							<generateApis>false</generateApis>-->
+<!--							<generateApiTests>false</generateApiTests>-->
+<!--							<generateApiDocumentation>false</generateApiDocumentation>-->
+<!--							<generateModels>true</generateModels>-->
+<!--							<modelsToGenerate>-->
+<!--								RecordLog,ErrorLog,ErrorLogCollection-->
+<!--							</modelsToGenerate>-->
+<!--							<generateModelTests>false</generateModelTests>-->
+<!--							<generateSupportingFiles>false</generateSupportingFiles>-->
+<!--							<generateModelDocumentation>true</generateModelDocumentation>-->
+<!--							<configOptions>-->
+<!--								<java8>true</java8>-->
+<!--								<dateLibrary>java</dateLibrary>-->
+<!--								<interfaceOnly>true</interfaceOnly>-->
+<!--							</configOptions>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--					<execution>-->
+<!--						<id>file-definitions</id>-->
+<!--						<goals>-->
+<!--							<goal>generate</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<inputSpec>${file-definitions.yaml.file}</inputSpec>-->
+<!--							<output>${project.build.directory}/generated-sources</output>-->
+<!--							<generatorName>spring</generatorName>-->
+<!--							<modelPackage>${project.groupId}.domain.dto</modelPackage>-->
+<!--							<generateApis>true</generateApis>-->
+<!--							<generateApiTests>false</generateApiTests>-->
+<!--							<generateApiDocumentation>false</generateApiDocumentation>-->
+<!--							<generateModels>true</generateModels>-->
+<!--							<modelsToGenerate>-->
+<!--								FileDefinition-->
+<!--							</modelsToGenerate>-->
+<!--							<generateModelTests>false</generateModelTests>-->
+<!--							<generateSupportingFiles>true</generateSupportingFiles>-->
+<!--							<generateModelDocumentation>true</generateModelDocumentation>-->
+<!--							<configOptions>-->
+<!--								<java8>true</java8>-->
+<!--								<dateLibrary>java</dateLibrary>-->
+<!--								<interfaceOnly>true</interfaceOnly>-->
+<!--							</configOptions>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--					<execution>-->
+<!--						<id>jobs-profiles</id>-->
+<!--						<goals>-->
+<!--							<goal>generate</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<inputSpec>${jobs-profiles.yaml.file}</inputSpec>-->
+<!--							<output>${project.build.directory}/generated-sources</output>-->
+<!--							<generatorName>spring</generatorName>-->
+<!--							<modelPackage>${project.groupId}.domain.dto</modelPackage>-->
+<!--							<generateApis>true</generateApis>-->
+<!--							<generateApiTests>false</generateApiTests>-->
+<!--							<generateApiDocumentation>false</generateApiDocumentation>-->
+<!--							<generateModels>true</generateModels>-->
+<!--							<modelsToGenerate>-->
+<!--								jobProfile,jobProfileCollection,Protocol,RecordTypes,Transformations,UserInfo-->
+<!--							</modelsToGenerate>-->
+<!--							<generateModelTests>false</generateModelTests>-->
+<!--							<generateSupportingFiles>false</generateSupportingFiles>-->
+<!--							<generateModelDocumentation>true</generateModelDocumentation>-->
+<!--							<configOptions>-->
+<!--								<java8>true</java8>-->
+<!--								<dateLibrary>java</dateLibrary>-->
+<!--								<interfaceOnly>true</interfaceOnly>-->
+<!--							</configOptions>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--					<execution>-->
+<!--						<id>mapping-profiles</id>-->
+<!--						<goals>-->
+<!--							<goal>generate</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<inputSpec>${mapping-profiles.yaml.file}</inputSpec>-->
+<!--							<output>${project.build.directory}/generated-sources</output>-->
+<!--							<generatorName>spring</generatorName>-->
+<!--							<modelPackage>${project.groupId}.domain.dto</modelPackage>-->
+<!--							<generateApis>true</generateApis>-->
+<!--							<generateApiTests>false</generateApiTests>-->
+<!--							<generateApiDocumentation>false</generateApiDocumentation>-->
+<!--							<generateModels>true</generateModels>-->
+<!--							<modelsToGenerate>-->
+<!--								MappingProfile,MappingProfileCollection-->
+<!--							</modelsToGenerate>-->
+<!--							<generateModelTests>false</generateModelTests>-->
+<!--							<generateSupportingFiles>false</generateSupportingFiles>-->
+<!--							<generateModelDocumentation>true</generateModelDocumentation>-->
+<!--							<configOptions>-->
+<!--								<java8>true</java8>-->
+<!--								<dateLibrary>java</dateLibrary>-->
+<!--								<interfaceOnly>true</interfaceOnly>-->
+<!--							</configOptions>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--					<execution>-->
+<!--						<id>transformation-fields</id>-->
+<!--						<goals>-->
+<!--							<goal>generate</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<inputSpec>${transformation-fields.yaml.file}</inputSpec>-->
+<!--							<output>${project.build.directory}/generated-sources</output>-->
+<!--							<generatorName>spring</generatorName>-->
+<!--							<modelPackage>${project.groupId}.domain.dto</modelPackage>-->
+<!--							<generateApis>true</generateApis>-->
+<!--							<generateApiTests>false</generateApiTests>-->
+<!--							<generateApiDocumentation>false</generateApiDocumentation>-->
+<!--							<generateModels>true</generateModels>-->
+<!--							<modelsToGenerate>-->
+<!--								TransformationField,TransformationFieldCollection-->
+<!--							</modelsToGenerate>-->
+<!--							<generateModelTests>false</generateModelTests>-->
+<!--							<generateSupportingFiles>false</generateSupportingFiles>-->
+<!--							<generateModelDocumentation>true</generateModelDocumentation>-->
+<!--							<configOptions>-->
+<!--								<java8>true</java8>-->
+<!--								<dateLibrary>java</dateLibrary>-->
+<!--								<interfaceOnly>true</interfaceOnly>-->
+<!--							</configOptions>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+				</executions>
+			</plugin>
+
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
@@ -165,6 +355,24 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M5</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>3.0.0-M1</version>
+				<configuration>
+					<preparationGoals>clean verify</preparationGoals>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+					<pushChanges>false</pushChanges>
+					<localCheckout>true</localCheckout>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

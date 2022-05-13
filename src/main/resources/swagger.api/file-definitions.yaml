@@ -1,0 +1,145 @@
+openapi: 3.0.0
+info:
+  title: Data-export file definitions API
+  version: v1
+servers:
+  - url: /data-export/
+paths:
+  /file-definitions:
+    description: File upload service
+    post:
+      description: Create file definition
+      operationId: postFileDefinition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/fileDefinition'
+            example:
+              $ref: '#/components/examples/fileDefinition'
+      responses:
+        "200":
+          description: Returns created file definition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/examples/fileDefinition'
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: Bad request
+        "413":
+          description: Request entity too large
+          content:
+            application/json:
+              example:
+                $ref: '#/components/schemas/errors'
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errors'
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+  /file-definitions/{id}:
+    get:
+      description: Method to get file definition by id
+      operationId: getFileDefinitionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: UUID of the file definition
+          schema:
+            $ref: "#/components/schemas/UUID"
+      responses:
+        "200":
+          description: Returns file definition found by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/examples/fileDefinition'
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: Bad request
+        "404":
+          description: File definition with a given ID not found
+          content:
+            text/plain:
+              example:
+                Not found
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+  /file-definitions/{id}/upload:
+    post:
+      description: Method to upload file
+      operationId: uploadFile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: UUID of the file definition
+          schema:
+            $ref: "#/components/schemas/UUID"
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "200":
+          description: file uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/examples/fileDefinition'
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: Bad request
+        "404":
+          description: File definition with a given ID not found
+          content:
+            text/plain:
+              example: Not found
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+components:
+  schemas:
+    UUID:
+      type: string
+      format: uuid
+    errors:
+      $ref: 'schemas/errors.json'
+    fileDefinition:
+      $ref: 'schemas/fileDefinition.json#/FileDefinition'
+  examples:
+    fileDefinition:
+      value:
+        $ref: 'examples/fileDefinition.sample'
