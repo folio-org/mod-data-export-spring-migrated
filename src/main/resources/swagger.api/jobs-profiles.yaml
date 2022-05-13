@@ -196,9 +196,9 @@ components:
     errors:
       $ref: 'schemas/errors.json'
     jobProfile:
-      $ref: 'schemas/profiles/jobProfile.json#/jobProfile'
+      $ref: 'schemas/profiles/jobProfile.json#/JobProfile'
     jobProfileCollection:
-      $ref: 'schemas/profiles/jobProfileCollection.json#/jobProfileCollection'
+      $ref: 'schemas/profiles/jobProfileCollection.json#/JobProfileCollection'
     protocol:
       $ref: 'schemas/profiles/protocol.json#/Protocol'
     recordTypes:

@@ -1,8 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "Transformation field",
-  "type": "object",
-  "additionalProperties": false,
+  "TransformationField": {
+    "type": "object",
+    "additionalProperties": false,
     "properties": {
       "fieldId": {
         "description": "Mapping rule id of this field",
@@ -29,10 +30,11 @@
         "type": "object",
         "javaType": "java.util.Map<String, String>"
       }
-  },
-  "required": [
-    "fieldId",
-    "displayNameKey",
-    "path"
-  ]
+    },
+    "required": [
+      "fieldId",
+      "displayNameKey",
+      "path"
+    ]
+  }
 }
