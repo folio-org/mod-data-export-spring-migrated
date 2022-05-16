@@ -16,15 +16,15 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/fileDefinition'
-            example:
-              $ref: '#/components/examples/fileDefinitionSample'
+#            example:
+#              $ref: '#/components/examples/fileDefinitionSample'
       responses:
         "200":
           description: Returns created file definition
-          content:
-            application/json:
-              example:
-                $ref: '#/components/examples/fileDefinitionSample'
+#          content:
+#            application/json:
+#              example:
+#                $ref: '#/components/examples/fileDefinitionSample'
         "400":
           description:
             Bad request, e.g. malformed request body or query parameter.
@@ -64,10 +64,10 @@ paths:
       responses:
         "200":
           description: Returns file definition found by id
-          content:
-            application/json:
-              example:
-                $ref: '#/components/examples/fileDefinitionSample'
+#          content:
+#            application/json:
+#              example:
+#                $ref: '#/components/examples/fileDefinitionSample'
         "400":
           description:
             Bad request, e.g. malformed request body or query parameter.
@@ -108,10 +108,10 @@ paths:
       responses:
         "200":
           description: file uploaded
-          content:
-            application/json:
-              example:
-                $ref: '#/components/examples/fileDefinitionSample'
+#          content:
+#            application/json:
+#              example:
+#                $ref: '#/components/examples/fileDefinitionSample'
         "400":
           description:
             Bad request, e.g. malformed request body or query parameter.
