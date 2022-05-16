@@ -23,7 +23,7 @@ paths:
           description: Returns created file definition
           content:
             application/json:
-              schema:
+              example:
                 $ref: '#/components/examples/fileDefinitionSample'
         "400":
           description:
@@ -66,7 +66,7 @@ paths:
           description: Returns file definition found by id
           content:
             application/json:
-              schema:
+              example:
                 $ref: '#/components/examples/fileDefinitionSample'
         "400":
           description:
@@ -110,7 +110,7 @@ paths:
           description: file uploaded
           content:
             application/json:
-              schema:
+              example:
                 $ref: '#/components/examples/fileDefinitionSample'
         "400":
           description:
