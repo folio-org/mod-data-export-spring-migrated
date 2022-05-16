@@ -196,17 +196,17 @@ components:
     errors:
       $ref: 'schemas/errors.json'
     jobProfile:
-      $ref: 'schemas/profiles/jobProfile.json#/JobProfile'
+      $ref: 'schemas/profiles/jobProfile.json'
     jobProfileCollection:
-      $ref: 'schemas/profiles/jobProfileCollection.json#/JobProfileCollection'
+      $ref: 'schemas/profiles/jobProfileCollection.json'
     protocol:
-      $ref: 'schemas/profiles/protocol.json#/Protocol'
+      $ref: 'schemas/profiles/protocol.json'
     recordTypes:
-      $ref: 'schemas/profiles/recordTypes.json#/RecordTypes'
+      $ref: 'schemas/profiles/recordTypes.json'
     transformations:
-      $ref: 'schemas/profiles/transformations.json#/Transformations'
+      $ref: 'schemas/profiles/transformations.json'
     userInfo:
-      $ref: 'schemas/profiles/userInfo.json#/UserInfo'
+      $ref: 'schemas/profiles/userInfo.json'
   examples:
     jobProfile:
       value:

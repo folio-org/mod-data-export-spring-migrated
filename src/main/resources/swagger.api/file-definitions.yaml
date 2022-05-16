@@ -138,7 +138,7 @@ components:
     errors:
       $ref: 'schemas/errors.json'
     fileDefinition:
-      $ref: 'schemas/fileDefinition.json#/FileDefinition'
+      $ref: 'schemas/fileDefinition.json'
   examples:
     fileDefinitionSample:
       value:

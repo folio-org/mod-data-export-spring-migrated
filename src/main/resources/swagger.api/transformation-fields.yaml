@@ -40,9 +40,9 @@ paths:
 components:
   schemas:
     transformationField:
-      $ref: 'schemas/transformationField.json#/TransformationField'
+      $ref: 'schemas/transformationField.json'
     transformationFieldCollection:
-      $ref: 'schemas/transformationFieldCollection.json#/TransformationFieldCollection'
+      $ref: 'schemas/transformationFieldCollection.json'
   examples:
     transformationFieldCollection:
       value:

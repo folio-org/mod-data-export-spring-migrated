@@ -251,27 +251,27 @@ components:
       type: string
       format: uuid
     parameters:
-      $ref: 'schemas/parameters.json#/Parameters'
+      $ref: 'schemas/parameters.json'
     error:
-      $ref: 'schemas/error.json#/Error'
+      $ref: 'schemas/error.json'
     errors:
-      $ref: 'schemas/errors.json#/Errors'
+      $ref: 'schemas/errors.json'
     exportRequest:
-      $ref: 'schemas/exportRequest.json#/ExportRequest'
+      $ref: 'schemas/exportRequest.json'
     quickExportRequest:
-      $ref: 'schemas/quickExportRequest.json#/QuickExportRequest'
+      $ref: 'schemas/quickExportRequest.json'
     quickExportResponse:
-      $ref: 'schemas/quickExportResponse.json#/QuickExportResponse'
+      $ref: 'schemas/quickExportResponse.json'
     exportedFile:
-      $ref: 'schemas/exportedFile.json#/ExportedFile'
+      $ref: 'schemas/exportedFile.json'
     jobExecution:
-      $ref: 'schemas/jobExecution.json#/JobExecution'
+      $ref: 'schemas/jobExecution.json'
     jobExecutionCollection:
-      $ref: 'schemas/jobExecutionCollection.json#/JobExecutionCollection'
+      $ref: 'schemas/jobExecutionCollection.json'
     fileDownload:
-      $ref: 'schemas/fileDownload.json#/FileDownload'
+      $ref: 'schemas/fileDownload.json'
     metadata:
-      $ref: 'schemas/references/metadata.json#/Metadata'
+      $ref: 'schemas/references/metadata.json'
   examples:
     exportRequest:
       value:

@@ -50,11 +50,11 @@ paths:
 components:
   schemas:
     recordLog:
-      $ref: 'schemas/logs/recordLog.json#/RecordLog'
+      $ref: 'schemas/logs/recordLog.json'
     errorLog:
-      $ref: 'schemas/logs/errorLog.json#/ErrorLog'
+      $ref: 'schemas/logs/errorLog.json'
     errorLogCollection:
-      $ref: 'schemas/logs/errorLogCollection.json#/ErrorLogCollection'
+      $ref: 'schemas/logs/errorLogCollection.json'
     errors:
       $ref: 'schemas/errors.json'
   examples:

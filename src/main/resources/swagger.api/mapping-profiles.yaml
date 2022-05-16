@@ -196,9 +196,9 @@ components:
     errors:
       $ref: 'schemas/errors.json'
     mappingProfile:
-      $ref: 'schemas/profiles/mappingProfile.json#/MappingProfile'
+      $ref: 'schemas/profiles/mappingProfile.json'
     mappingProfileCollection:
-      $ref: 'schemas/profiles/mappingProfileCollection.json#/MappingProfileCollection'
+      $ref: 'schemas/profiles/mappingProfileCollection.json'
   examples:
     mappingProfile:
       value:
