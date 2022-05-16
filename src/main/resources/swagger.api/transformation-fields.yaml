@@ -11,7 +11,7 @@ paths:
       description: Retrieve transformation-field items
       operationId: getTransformationFields
       responses:
-        200:
+        "200":
           description: Returns a list of transformation-field items
           content:
             application/json:

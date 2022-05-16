@@ -15,7 +15,7 @@ paths:
         - $ref: "#/components/parameters/trait_pageable_limit"
         - $ref: "#/components/parameters/trait_queryable_query"
       responses:
-        200:
+        "200":
           description: Returns a list of log items
           content:
             application/json:
@@ -60,7 +60,7 @@ components:
   examples:
     errorLogCollection:
       value:
-        $ref: 'examples/logs/errorLogCollection.json'
+        $ref: 'examples/logs/errorLogCollection.sample'
   parameters:
     trait_queryable_query:
       name: query

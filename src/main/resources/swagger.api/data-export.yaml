@@ -179,7 +179,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/fileDownload'
               example:
-                $ref: '#/components/examples/fileDownload'
+                $ref: '#/components/examples/'
         "400":
           description:
             Bad request, e.g. malformed request body or query parameter.

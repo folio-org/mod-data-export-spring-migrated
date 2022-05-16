@@ -56,7 +56,7 @@ paths:
         - $ref: "#/components/parameters/trait_pageable_limit"
         - $ref: "#/components/parameters/trait_queryable_query"
       responses:
-        200:
+        "200":
           description: Returns a list of mapping-profile items
           content:
             application/json:
@@ -129,7 +129,7 @@ paths:
           schema:
             $ref: "#/components/schemas/UUID"
       responses:
-        204:
+        "204":
           description: Mapping profile deleted successfully
         "400":
           description:
@@ -168,7 +168,7 @@ paths:
             example:
               $ref: '#/components/examples/mappingProfile'
       responses:
-        204:
+        "204":
           description: Mapping profile successfully updated
         "400":
           description:
