@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "File that should be exported",
+  "ExportedFile": {
+    "type": "object",
+    "properties": {
+      "fileId": {
+        "description": "File unique identifier",
+        "$ref": "references/uuid.json"
+      },
+      "fileName": {
+        "description": "File name",
+        "type": "string"
+      }
+    },
+    "required": [
+      "fileName",
+      "fileId"
+    ]
+  }
+}

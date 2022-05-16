@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of Job Profiles",
+  "JobProfileCollection": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "jobProfiles": {
+        "description": "List of Job Profiles",
+        "type": "array",
+        "id": "jobProfileList",
+        "items": {
+          "type": "object",
+          "$ref": "jobProfile.json#/JobProfile"
+        }
+      },
+      "totalRecords": {
+        "description": "Total number of Job Profiles",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "jobProfiles",
+      "totalRecords"
+    ]
+  }
+}

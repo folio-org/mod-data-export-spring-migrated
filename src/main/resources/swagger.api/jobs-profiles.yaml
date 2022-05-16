@@ -1,0 +1,242 @@
+openapi: 3.0.0
+info:
+  title: Data-export job profiles API
+  version: v1
+servers:
+  - url: /data-export/
+paths:
+  /job-profiles:
+    post:
+      description: Create a new job-profile item
+      operationId: postJobProfile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jobProfile'
+            example:
+              $ref: '#/components/examples/jobProfile'
+      responses:
+        "201":
+          description: Returns a newly created item, with server-controlled fields like 'id' populated
+          content:
+            application/json:
+              example:
+                $ref: '#/components/examples/jobProfile'
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: unable to add job-profile -- malformed JSON at 13:3
+        "401":
+          description: Not authorized to perform requested action
+          content:
+            text/plain:
+              example: unable to create job-profiles -- unauthorized
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errors'
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+    get:
+      description: Retrieve a list of job-profile items
+      operationId: getJobProfilesByFilter
+      parameters:
+        - $ref: "#/components/parameters/trait_pageable_offset"
+        - $ref: "#/components/parameters/trait_pageable_limit"
+        - $ref: "#/components/parameters/trait_queryable_query"
+      responses:
+        "200":
+          description: Returns a list of job-profile items
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobProfileCollection'
+              example:
+                $ref: '#/components/examples/jobProfileCollection'
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: unable to list job-profiles -- malformed parameter 'query', syntax error at column 6
+        "401":
+          description: Not authorized to perform requested action
+          content:
+            text/plain:
+              example: unable to list job-profiles -- unauthorized
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errors'
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+  /job-profiles/{id}:
+    get:
+      description: Retrieve job-profile item with given id
+      operationId: getJobProfileById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: UUID of the job profile
+          schema:
+            $ref: "#/components/schemas/UUID"
+      responses:
+        "200":
+          description: Returns job profile with a given ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobProfile'
+              example:
+                $ref: '#/components/examples/jobProfile'
+        "404":
+          description: Job profile with a given ID not found
+          content:
+            text/plain:
+              example: job-profile not found
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+    delete:
+      description: Delete job-profile item with given id
+      operationId: deleteJobProfileById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: UUID of the job profile
+          schema:
+            $ref: "#/components/schemas/UUID"
+      responses:
+        "204":
+          description: Job profile deleted successfully
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: unable to delete job-profile -- constraint violation
+        "404":
+          description: Job profile with a given ID not found
+          content:
+            text/plain:
+              example: job-profile not found
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+    put:
+      description: Update job-profile item with given id
+      operationId: updateJobProfileById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: UUID of the job profile
+          schema:
+            $ref: "#/components/schemas/UUID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jobProfile'
+            example:
+              $ref: '#/components/examples/jobProfile'
+      responses:
+        "204":
+          description: Job profile successfully updated
+        "400":
+          description:
+            Bad request, e.g. malformed request body or query parameter.
+            Details of the errors (e.g. name of the parameter or line/character number
+            with malformed data) provided in the response.
+          content:
+            text/plain:
+              example: unable to update job-profile -- malformed JSON at 13:4
+        "404":
+          description: Job profile with a given ID not found
+          content:
+            text/plain:
+              example: job-profile not found
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              example: Internal server error
+components:
+  schemas:
+    UUID:
+      type: string
+      format: uuid
+    errors:
+      $ref: 'schemas/errors.json'
+    jobProfile:
+      $ref: 'schemas/profiles/jobProfile.json'
+    jobProfileCollection:
+      $ref: 'schemas/profiles/jobProfileCollection.json'
+    protocol:
+      $ref: 'schemas/profiles/protocol.json'
+    recordTypes:
+      $ref: 'schemas/profiles/recordTypes.json'
+    transformations:
+      $ref: 'schemas/profiles/transformations.json'
+    userInfo:
+      $ref: 'schemas/profiles/userInfo.json'
+  examples:
+    jobProfile:
+      value:
+        $ref: 'examples/profiles/jobProfile.sample'
+    jobProfileCollection:
+      value:
+        $ref: 'examples/profiles/jobProfileCollection.sample'
+  parameters:
+    trait_queryable_query:
+      name: query
+      in: query
+      description: A query string to filter rules based on matching criteria in fields.
+      schema:
+        type: string
+    trait_pageable_offset:
+      name: offset
+      in: query
+      description: Skip over a number of elements by specifying an offset value for
+        the query
+      schema:
+        default: 0
+        minimum: 0
+        maximum: 2147483647
+        type: integer
+    trait_pageable_limit:
+      name: limit
+      in: query
+      description: Limit the number of elements returned in the response
+      schema:
+        default: 10
+        minimum: 0
+        maximum: 2147483647
+        type: integer

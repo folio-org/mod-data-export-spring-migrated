@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of execution jobs",
+  "JobExecutionCollection": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "jobExecutions": {
+        "description": "List of execution jobs",
+        "type": "array",
+        "id": "jobExecutionList",
+        "items": {
+          "type": "object",
+          "$ref": "jobExecution.json#/JobExecution"
+        }
+      },
+      "totalRecords": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "jobExecutions",
+      "totalRecords"
+    ]
+  }
+}

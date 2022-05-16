@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of transformation fields",
+  "TransformationFieldCollection": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "transformationFields": {
+        "description": "List of transformation fields",
+        "type": "array",
+        "id": "transformationFieldsList",
+        "items": {
+          "type": "object",
+          "$ref": "transformationField.json#/TransformationField"
+        }
+      },
+      "totalRecords": {
+        "description": "Total number of transformation fields",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "transformationFields",
+      "totalRecords"
+    ]
+  }
+}
