@@ -17,14 +17,14 @@ paths:
             schema:
               $ref: '#/components/schemas/fileDefinition'
             example:
-              $ref: '#/components/examples/fileDefinition'
+              $ref: '#/components/examples/fileDefinitionSample'
       responses:
         "200":
           description: Returns created file definition
           content:
             application/json:
               schema:
-                $ref: '#/components/examples/fileDefinition'
+                $ref: '#/components/examples/fileDefinitionSample'
         "400":
           description:
             Bad request, e.g. malformed request body or query parameter.
@@ -67,7 +67,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/examples/fileDefinition'
+                $ref: '#/components/examples/fileDefinitionSample'
         "400":
           description:
             Bad request, e.g. malformed request body or query parameter.
@@ -111,7 +111,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/examples/fileDefinition'
+                $ref: '#/components/examples/fileDefinitionSample'
         "400":
           description:
             Bad request, e.g. malformed request body or query parameter.
@@ -140,6 +140,6 @@ components:
     fileDefinition:
       $ref: 'schemas/fileDefinition.json#/FileDefinition'
   examples:
-    fileDefinition:
+    fileDefinitionSample:
       value:
         $ref: 'examples/fileDefinition.sample'
